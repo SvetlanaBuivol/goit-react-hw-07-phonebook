@@ -1,5 +1,5 @@
-import { createSelector } from "@reduxjs/toolkit";
-import { getContacts } from "redax/contacts/contactSelectors";
+import { createSelector } from '@reduxjs/toolkit';
+import { getContacts } from 'redax/contacts/contactSelectors';
 
 export const selectFilterValue = state => state.filter.filter.toLowerCase();
 

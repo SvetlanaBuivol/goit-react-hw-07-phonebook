@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { ContactItem, DeleteBtn } from './Сontact.styled';
 import { useDispatch } from 'react-redux';
-import { deleteContactAsync} from 'redax/contacts/contactsOperetions';
+import { deleteContactAsync } from 'redax/contacts/contactsOperetions';
 import { Notify } from 'notiflix';
 
 function Contact({ id, name, number }) {

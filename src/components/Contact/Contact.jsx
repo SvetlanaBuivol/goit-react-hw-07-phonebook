@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { ContactItem, DeleteBtn } from './Сontact.styled';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redax/contacts/contactsSlice';
+import { deleteContactAsync} from 'redax/contacts/contactsOperetions';
 import { Notify } from 'notiflix';
 
 function Contact({ id, name, number }) {
   const dispatch = useDispatch();
 
   const removeContact = contactId => {
-    dispatch(deleteContact(contactId));
+    dispatch(deleteContactAsync(contactId));
 
     Notify.success('Deleted', {
       position: 'center-top',

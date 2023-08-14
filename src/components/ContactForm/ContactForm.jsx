@@ -9,8 +9,7 @@ import {
 } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
-import { nanoid } from 'nanoid';
-import { addContact } from 'redax/contacts/contactsSlice';
+import { addContactAsync } from 'redax/contacts/contactsOperetions';
 import { getContacts } from 'redax/contacts/contactSelectors';
 
 export default function ContactForm() {
@@ -42,7 +41,6 @@ export default function ContactForm() {
     const newContact = {
       name,
       number,
-      id: nanoid(),
     };
 
     const isExist = contacts.some(
@@ -62,7 +60,7 @@ export default function ContactForm() {
       return;
     }
 
-    dispatch(addContact(newContact));
+    dispatch(addContactAsync(newContact));
 
     Notify.success('Contact added successfully', {
       position: 'center-top',

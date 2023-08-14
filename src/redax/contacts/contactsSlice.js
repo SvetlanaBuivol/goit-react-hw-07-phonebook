@@ -1,33 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { addContactAsync, deleteContactAsync, fetchContactsAsync } from './contactsOperetions';
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: { contacts: [] },
-  reducers: {
-    addContact(state, action) {
-      state.contacts.push(action.payload);
-    },
-    deleteContact(state, action) {
-      state.contacts = state.contacts.filter(
-        contact => contact.id !== action.payload
-      );
-    },
+  initialState: {
+    contacts: [],
+    loading: 'idle',
+  },
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContactsAsync.pending, state => {
+        state.loading = 'pending';
+      })
+      .addCase(fetchContactsAsync.fulfilled, (state, action) => {
+        state.loading = 'idle';
+        state.contacts = action.payload;
+      })
+      .addCase(addContactAsync.fulfilled, (state, action) => {
+        state.contacts.push(action.payload);
+      })
+      .addCase(deleteContactAsync.fulfilled, (state, action) => {
+        state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
+      });
   },
 });
 
-const persistConfig = {
-  key: 'contacts',
-  storage,
-};
-
-export const contactsReducer = persistReducer(
-  persistConfig,
-  contactsSlice.reducer
-);
-
-export const { addContact, deleteContact } = contactsSlice.actions;
-
-// Selectors
-
+export const contactsReducer = contactsSlice.reducer;

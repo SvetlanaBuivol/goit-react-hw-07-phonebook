@@ -1,11 +1,18 @@
 import React from 'react';
 import Contact from 'components/Contact/Contact';
 import { Container, H2 } from './ContactList.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredContacts } from 'redax/filter/filterSelectors';
+import { useEffect } from 'react';
+import { fetchContactsAsync } from 'redax/contacts/contactsOperetions';
 
 function ContactList() {
   const filteredcontacts = useSelector(selectFilteredContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContactsAsync());
+  }, [dispatch]);
 
   return (
     <Container>

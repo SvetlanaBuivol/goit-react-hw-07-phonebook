@@ -10,17 +10,24 @@ function Contact({ id, name, number }) {
   const dispatch = useDispatch();
 
   const removeContact = contactId => {
-    dispatch(deleteContactAsync(contactId));
-
-    Notify.success('Deleted', {
-      position: 'center-top',
-      clickToClose: true,
-      timeout: 1500,
-      success: {
-        background: '#9dbc89df',
-      },
-    });
+    dispatch(deleteContactAsync(contactId))
+      .then(() => {
+        Notify.success('Deleted', {
+          position: 'center-top',
+          clickToClose: true,
+          timeout: 1500,
+          success: {
+            background: '#9dbc89df',
+          },
+        });
+      })
+      .catch(() => {
+        Notify.failure('Somthing was wrong, try again', {
+          position: 'center-top',
+        });
+      });
   };
+
   return (
     <ContactItem id={id}>
       <p>{name}</p>

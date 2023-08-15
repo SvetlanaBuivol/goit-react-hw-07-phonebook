@@ -5,13 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredContacts } from 'redax/filter/filterSelectors';
 import { useEffect } from 'react';
 import { fetchContactsAsync } from 'redax/contacts/contactsOperetions';
+import { Notify } from 'notiflix';
 
 function ContactList() {
   const filteredcontacts = useSelector(selectFilteredContacts);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContactsAsync());
+    dispatch(fetchContactsAsync()).catch(() => {
+      Notify.failure('Somthing was wrong, refresh the page', {
+        position: 'center-top',
+      });
+    });
   }, [dispatch]);
 
   return (

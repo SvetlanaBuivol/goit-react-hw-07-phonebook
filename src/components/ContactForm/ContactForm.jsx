@@ -60,15 +60,21 @@ export default function ContactForm() {
       return;
     }
 
-    dispatch(addContactAsync(newContact));
-
-    Notify.success('Contact added successfully', {
-      position: 'center-top',
-      clickToClose: true,
-      success: {
-        background: '#9dbc89df',
-      },
-    });
+    dispatch(addContactAsync(newContact))
+      .then(() => {
+        Notify.success('Contact added successfully', {
+          position: 'center-top',
+          clickToClose: true,
+          success: {
+            background: '#9dbc89df',
+          },
+        });
+      })
+      .catch(() => {
+        Notify.failure('Somthing was wrong, try again', {
+          position: 'center-top',
+        });
+      });
     reset();
   };
 
